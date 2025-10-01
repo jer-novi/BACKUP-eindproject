@@ -1,0 +1,50 @@
+/**
+ * @file _fonts.scss
+ * @description Font imports en @font-face declaraties voor Gedichtgevel.nl
+ * @author Jerôme
+ * @group Foundational
+ */
+
+// ==========================================================================
+// GOOGLE FONTS
+// ==========================================================================
+// Google Fonts (Bitter, Work Sans & Cormorant Garamond) are loaded via <link>
+// tags in index.html for better performance and reliability.
+// See: index.html <head> section
+
+// ==========================================================================
+// CUSTOM FONTS (@font-face)
+// ==========================================================================
+
+// Quilty Font
+@font-face {
+  font-family:  "Quilty";
+  src:          url("@/assets/fonts/quilty-regularitalic.ttf") format("truetype");
+  font-weight:  400;
+  font-style:   italic;
+  font-display: swap;
+  }
+
+// For regular and bold weights, we'll use the italic as fallback
+// You may want to download the regular and bold versions as well
+@font-face {
+  font-family:  "Quilty";
+  src:          url("@/assets/fonts/quilty-regularitalic.ttf") format("truetype");
+  font-weight:  400;
+  font-style:   normal;
+  font-display: swap;
+  }
+
+@font-face {
+  font-family:  "Quilty";
+  src:          url("@/assets/fonts/quilty-regularitalic.ttf") format("truetype");
+  font-weight:  700;
+  font-style:   normal;
+  font-display: swap;
+  }
+
+// ==========================================================================
+// FONT PRELOADING NOTE
+// ==========================================================================
+// Cormorant Garamond is preloaded via Google Fonts for Pixi.js Canvas text rendering
+// The font is available in the canvas via font-family: 'Cormorant Garamond', serif

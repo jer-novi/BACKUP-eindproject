@@ -1,0 +1,98 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as mixins;
+@use "@/styles/effects" as *;
+@use "@/styles/typography" as *;
+// Add this line to import typography variables
+@use "sass:color"; // Add this line
+
+.button {
+  @include mixins.button-base; // Base styles from mixin
+  font-size:     $font-size-m; // Default font size
+  width:         auto; // Default width
+  padding:       $spacing-s $spacing-m; // Default padding
+  cursor:        pointer;
+  transition:    background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  text-align:    center;
+  border-radius: $border-radius-sm;
+  }
+
+.buttonPrimary {
+  @include mixins.button-variant($button-primary-background, $button-primary-text);
+
+  }
+
+.buttonSecondary {
+  @include mixins.button-variant($button-secondary-background, $button-secondary-text, $button-secondary-border);
+
+  }
+
+.buttonTertiary {
+  padding:         $spacing-xs $spacing-s; // Adjust padding for text-like buttons
+  text-decoration: underline;
+  color:           $text-link; // Use link color for tertiary buttons
+  border:          none;
+  background:      transparent;
+
+  &:hover, &:focus {
+	color:      color.scale($text-link, $lightness: -10%);
+	background: transparent; // Ensure no background on hover for tertiary
+	}
+  }
+
+.buttonDanger {
+  @include mixins.button-variant($feedback-error, $button-primary-text);
+
+  }
+
+.buttonSuccess {
+  @include mixins.button-variant($feedback-success, $button-primary-text);
+
+  }
+
+.buttonSmall {
+  font-size: $font-size-s;
+  padding:   $spacing-xs $spacing-s; // Adjusted padding
+  }
+
+.buttonLarge {
+  font-size: $font-size-l;
+  padding:   $spacing-m $spacing-l; // Adjusted padding
+  }
+
+.buttonDisabled {
+  cursor:  not-allowed;
+  opacity: 0.6;
+  // Ensure hover/focus effects are also disabled or less prominent
+  &:hover, &:focus {
+	// Potentially revert to base disabled colors if variants change them
+	background-color: currentColor; // Example, adjust as needed
+	}
+  }
+
+.buttonLoading {
+  // Add styles for loading state, e.g., a spinner
+  // For now, it can share disabled styles or have a specific indicator
+  cursor:  wait;
+  opacity: 0.8; // Slightly different opacity to indicate activity
+  }
+
+.buttonIcon {
+  // Styles for buttons that primarily contain an icon
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             $spacing-xs;
+  }
+
+.buttonFullWidth {
+  display: block; // Or flex if content needs centering
+  width:   100%;
+  }
+
+// This class can be used for the main form submission button
+.formSubmit {
+  // Inherits from .button and a variant like .buttonPrimary
+  // Add any specific margin or style overrides for submit buttons if needed
+  // For example, if all submit buttons need a specific top margin:
+  margin-top: $spacing-s;
+  }

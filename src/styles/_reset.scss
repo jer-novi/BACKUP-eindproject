@@ -1,0 +1,268 @@
+/**
+ * @file _reset.scss
+ * @description CSS reset en normalizer voor consistente stijlen in "Gedichtgevel.nl"
+ * @author Jerôme
+ * @group Foundational
+ * @imports geen
+ * @exports Basis CSS reset/normalize regels
+ */
+
+/*
+✅ Good Parts of the Reset
+
+1. Universal box-sizing: Line 26-28 correctly sets box-sizing: border-box for all elements
+2. Comprehensive margin/padding reset: Removes default spacing from all common elements
+3. Text rendering optimization: Improves font display across browsers
+4. Media elements: Makes images and videos responsive by default
+5. Form normalization: Ensures consistent form styling across browsers
+6. HTML5 element support: Proper display for semantic elements
+
+ 🔧 For the Horizontal Scrollbar Issue
+
+ Since you already have box-sizing: border-box in your reset, we should remove the individual box-sizing declarations I was adding and instead focus on the
+actual cause of the horizontal scrollbar.
+*/
+
+/* ======================================================= 
+ * CSS RESET
+ * ======================================================= 
+ * Reset en normalisatie van standaard browserstijlen om een 
+ * consistente basis te creëren voor alle elementen over alle browsers heen.
+ */
+
+@use "./variables" as *;
+
+/* ------------------------------------------------------- 
+ * BOX MODEL RESET
+ * ------------------------------------------------------- 
+ * Zorgt dat padding en border worden opgenomen in element afmetingen.
+ * Voorkomt onverwachte overflow en maakt berekeningen eenvoudiger.
+ */
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  }
+
+/* ------------------------------------------------------- 
+ * MARGINS & PADDING RESET
+ * ------------------------------------------------------- 
+ * Verwijdert alle standaard marges en padding die browsers aan 
+ * elementen toekennen. Dit geeft volledige controle over spacing.
+ */
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, figure, figcaption, blockquote, dl, dd {
+  margin:  0;
+  padding: 0;
+  }
+
+/* ------------------------------------------------------- 
+ * TEKSTRENDERING
+ * ------------------------------------------------------- 
+ * Verbetert de weergave van tekst in ondersteunde browsers 
+ * voor betere leesbaarheid en scherpte.
+ */
+
+html {
+  -webkit-text-size-adjust: 100%; // Voorkomt auto-tekstvergroting bij rotatie
+  }
+
+body {
+  -webkit-font-smoothing:  antialiased; // Voor WebKit browsers zoals Chrome/Safari
+  -moz-osx-font-smoothing: grayscale; // Voor Firefox op macOS
+  text-rendering:          optimizeLegibility; // Algemene tekstoptimalisatie
+  font-synthesis:          none; // Voorkomt synthetische vette of cursieve stijlen
+  }
+
+/* ------------------------------------------------------- 
+ * LINE HEIGHT NORMALISATIE
+ * ------------------------------------------------------- 
+ * Stelt een consistente basishoogte in voor tekst waardoor 
+ * tekst toegankelijker is en beter leesbaar.
+ */
+
+body * {
+  line-height: calc(2px + 2ex + 2px); // Toegankelijkheidsformule
+  }
+
+/* ------------------------------------------------------- 
+ * HELPER CLASSES
+ * ------------------------------------------------------- 
+ * Utiliteitsklassen voor specifieke weergave-doeleinden zoals toegankelijkheid.
+ */
+
+// Volledig verbergen (visueel en voor schermlezers)
+.hidden, [hidden] {
+  display: none !important;
+  }
+
+// Alleen visueel verbergen (toegankelijk voor schermlezers)
+.visually-hidden {
+  position:    absolute;
+  overflow:    hidden;
+  clip:        rect(0, 0, 0, 0);
+  width:       1px;
+  height:      1px;
+  margin:      -1px;
+  padding:     0;
+  white-space: nowrap;
+  border:      0;
+  }
+
+// Focuseerbare verborgen elementen zichtbaar maken bij focus
+.visually-hidden.focusable:active,
+.visually-hidden.focusable:focus {
+  position:    static;
+  overflow:    visible;
+  clip:        auto;
+  width:       auto;
+  height:      auto;
+  margin:      0;
+  white-space: inherit;
+  }
+
+// Onzichtbaar maar behoudt layout
+.invisible {
+  visibility: hidden;
+  }
+
+/* ------------------------------------------------------- 
+ * MEDIA ELEMENTEN
+ * ------------------------------------------------------- 
+ * Zorgt voor consistente weergave van media-elementen door inline 
+ * spacing te voorkomen en responsive gedrag te borgen.
+ */
+
+img, picture, video, canvas, svg {
+  display:   block;
+  max-width: 100%;
+  height:    auto; // Behoud van aspect ratio
+  }
+
+/* ------------------------------------------------------- 
+ * FORM ELEMENTEN
+ * ------------------------------------------------------- 
+ * Reset voor formulierelementen om consistenter gedrag te garanderen tussen browsers.
+ */
+
+button, input, optgroup, select, textarea {
+  font-family: inherit; // Consistent font
+  font-size:   100%; // Consistente grootte
+  line-height: 1.15; // Betere standaard regelhoogte
+  margin:      0; // Verwijder marges
+  }
+
+button, input {
+  overflow: visible; // Fix overflow in Edge
+  }
+
+button, select {
+  text-transform: none; // Verwijder teksttransformatie in Firefox
+  }
+
+// Verbeter styling voor klikbare elementen
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; // Normaliseer stijl in iOS/Safari
+  appearance:         button;
+  }
+
+// Verwijder binnenmarges en binnenrandjes in Firefox
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  padding:      0;
+  border-style: none;
+  }
+
+/* ------------------------------------------------------- 
+ * LINKS & INTERACTIEVE ELEMENTEN
+ * ------------------------------------------------------- 
+ * Consistente styling en gedrag voor links en interactieve elementen.
+ */
+
+a {
+  text-decoration:  none; // Standaard geen onderlijning
+  color:            inherit; // Erft kleur van ouder tenzij anders gespecificeerd
+  background-color: transparent; // Voor oudere browsers
+  }
+
+// Geef duidelijke focus indicator voor toetsenbordgebruikers
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+  outline: 2px solid transparent; // Zal worden overschreven door thema focus styles
+  }
+
+/* ------------------------------------------------------- 
+ * TYPOGRAPHY
+ * ------------------------------------------------------- 
+ * Basis typografie normalisatie voor consistentie.
+ */
+
+// Voorkom dat tekst in pre-elementen uit hun container breekt
+pre {
+  white-space:   pre-wrap; // Voegt regeleinden toe waar nodig
+  word-wrap:     break-word; // Breekt lange woorden indien nodig
+  overflow-wrap: break-word; // Modern alternatief voor word-wrap
+  }
+
+// Consistentie voor code-elementen
+code, kbd, samp {
+  font-family: monospace, monospace; // Zorgt voor consistent lettertype
+  font-size:   1em; // Vermijd grootteverschillen in alle browsers
+  }
+
+// Reset voor heading stijlen
+h1, h2, h3, h4, h5, h6 {
+  font-size:   inherit; // Grootte wordt in typografie gedefinieerd
+  font-weight: inherit; // Gewicht wordt in typografie gedefinieerd
+  }
+
+/* ------------------------------------------------------- 
+ * HTML5 DISPLAY DEFINITIONS
+ * ------------------------------------------------------- 
+ * Correcte weergavedefinities voor HTML5 elementen die in oudere browsers 
+ * problemen kunnen geven.
+ */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section {
+  display: block;
+  }
+
+/* ------------------------------------------------------- 
+ * TABEL NORMALISATIE
+ * ------------------------------------------------------- 
+ * Zorgt voor consistente tabelweergave tussen verschillende browsers.
+ */
+
+table {
+  width:           100%; // Standaard volle breedte
+  border-spacing:  0; // Verwijdert spaces tussen cellen
+  border-collapse: collapse; // Voegt randen samen tot enkele rand
+  }
+
+/* ------------------------------------------------------- 
+ * POËZIESPECIFIEKE RESETS
+ * ------------------------------------------------------- 
+ * Specifieke resets voor het poëzie-thema van de gedichtgevel applicatie.
+ */
+
+// Vers-elementen (blockquote voor poëzie)
+blockquote {
+  margin:  0;
+  padding: 0;
+  quotes:  """ """ "'" "'";
+  border:  0;
+  }
+
+// Gedicht specifieke stanza elementen
+.stanza {
+  margin-bottom: 1.5em; // Standaard marge tussen strofes
+  }
+
+// Vers regel (gedichtregel)
+.verse {
+  line-height: 1.6; // Iets ruimere regelhoogte voor gedichten
+  white-space: pre-wrap; // Behoudt gedicht formatting
+  }

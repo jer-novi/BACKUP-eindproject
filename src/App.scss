@@ -1,0 +1,20 @@
+/* Import reset styles first */
+@use "./styles/_reset.scss";
+@use "./styles/variables" as *;
+
+/* App-specific overrides only */
+.app-layout {
+  background-color: $secondary-dark; /* Main app background */
+  }
+
+/* Remove navbar padding for homepage since it has its own layout */
+.main-content--no-header {
+  padding-top: 0;
+  }
+
+/* DesignPage full-viewport layout - height set dynamically via inline style */
+.app-content.design-page-layout {
+  overflow: hidden;
+  }
+
+// TODO Checken of we styles uit App.scss.old nodig hebben.

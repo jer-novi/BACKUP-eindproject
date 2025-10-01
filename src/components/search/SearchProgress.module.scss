@@ -1,0 +1,303 @@
+/**
+ * SearchProgress SCSS - Loading and Error State Styling
+ * Consolidated from SearchErrorBoundary and SearchLoadingState
+ */
+
+@use "@styles/variables" as *;
+@use "@styles/mixins" as *;
+@use "sass:color";
+
+// ==============================================
+// SHARED PROGRESS CONTAINER STYLES
+// ==============================================
+
+// TODO Checken of dit niet naar het _searchShared bestand moet
+
+%progressContainer {
+  @include flex-center;
+  min-height: $height-progress-container; background-color: $secondary-dark;
+  }
+
+// ==============================================
+// ERROR BOUNDARY STYLES
+// ==============================================
+
+.errorBoundary {
+  @extend %progressContainer;
+  padding: $spacing-xxl $spacing-xl;
+  }
+
+.errorContainer {
+  max-width:        $width-error-container; padding: $spacing-xl;
+  text-align:       center;
+  border:           $border-width-regular solid rgba($feedback-error, 0.3);
+  border-radius:    $border-radius-xl;
+  background-color: rgba($feedback-error, 0.1);
+  backdrop-filter:  blur(10px);
+  }
+
+.errorIcon {
+  font-size:     $font-size-4xl;
+  display:       block;
+  margin-bottom: $spacing-m;
+  }
+
+.errorTitle {
+  font-family: $font-family-section-heading;
+  font-size:   $font-size-xxl;
+  font-weight: $font-weight-bold;
+  margin:      0 0 $spacing-m 0;
+  color:       $neutral-light;
+  }
+
+.errorMessage {
+  font-family: $font-family-body;
+  font-size:   $font-size-s;
+  line-height: $line-height-normal-unitless;
+  margin:      0 0 $spacing-xl 0;
+  color:       rgba($neutral-light, 0.8);
+  }
+
+.errorActions {
+  display:         flex;
+  flex-wrap:       wrap;
+  justify-content: center;
+  gap:             $spacing-m;
+  }
+
+.retryButton,
+.reloadButton {
+  @include button-base;
+  font-family:   $font-family-button;
+  font-weight:   $font-weight-semibold;
+  padding:       $spacing-s $spacing-l;
+  border-radius: $border-radius-md;
+  }
+
+.retryButton {
+  color:            $neutral-off-white;
+  background-color: $primary-lighter;
+
+  &:hover:not(:disabled) {
+	transform:        translateY(-1px);
+	background-color: $primary-light;
+	}
+  }
+
+.reloadButton {
+  color:            $neutral-light;
+  border:           $border-width-regular solid $neutral-light;
+  background-color: transparent;
+
+  &:hover:not(:disabled) {
+	color:            $secondary-dark;
+	background-color: $neutral-light;
+	}
+  }
+
+.errorDetails {
+  margin-top:       $spacing-xl;
+  padding:          $spacing-m;
+  text-align:       left;
+  border-radius:    $border-radius-md;
+  background-color: rgba($neutral-darker, 0.1);
+
+  summary {
+	font-family:   $font-family-section-heading;
+	font-weight:   $font-weight-semibold;
+	margin-bottom: $spacing-s;
+	cursor:        pointer;
+	color:         $neutral-light;
+
+	&:hover {
+	  color: $primary-lighter;
+	  }
+	}
+  }
+
+.errorStack {
+  font-family:      $font-family-monospace;
+  font-size:        $font-size-xs;
+  overflow-x:       auto;
+  overflow-y:       auto;
+  max-height:       $height-max-error-stack;
+  margin:           0;
+  padding:          $spacing-s;
+  white-space:      pre-wrap;
+  color:            rgba($neutral-light, 0.7);
+  border-radius:    $border-radius-sm;
+  background-color: rgba($neutral-darker, 0.5);
+  }
+
+// ==============================================
+// LOADING STATE STYLES
+// ==============================================
+
+.loadingContainer {
+  @extend %progressContainer;
+  position:       relative;
+  flex-direction: column;
+  width:          $width-medium-poem-showcase; height: $height-medium-poem-showcase; margin: 0 auto;
+  background:     $neutral-grey-figma;
+  }
+
+// TODO variabele css namen met figma in de naam checken en beter specificeren
+
+.loadingSpinner {
+  position:      relative;
+  width:         $size-loading-spinner;
+  height:        $size-loading-spinner;
+  margin-bottom: 0;
+  }
+
+.spinnerRing {
+  position:      relative;
+  width:         100%;
+  height:        100%;
+  animation:     spin 1.5s linear infinite;
+  border:        $border-width-extrathick solid rgba($neutral-white, 0.3);
+  border-top:    $border-width-extrathick solid $primary-lighter;
+  border-right:  $border-width-extrathick solid $secondary-carribean-current;
+  border-radius: $border-radius-pill;
+
+  // Center circle with image icon
+  &::before {
+	position:         absolute;
+	top:              50%;
+	left:             50%;
+	width:            $spacing-xxxl;
+	height:           $spacing-xxxl;
+	content:          "";
+	transform:        translate(-50%, -50%);
+	border-radius:    $border-radius-pill;
+	background-color: $neutral-white;
+	@include flex-center;
+	}
+
+  /// TODO mooiere loading state bouwen met svgof in content zelf met url()
+  // Pencil/Image icon in center - matching Figma
+  &::after {
+	font-size: $font-size-xl;
+	position:  absolute;
+	z-index:   2;
+	top:       50%;
+	left:      50%;
+	content:   "✒️";
+	transform: translate(-50%, -50%);
+	}
+  }
+
+.loadingText {
+  display: none; // Hidden to match Figma exactly
+  }
+
+@keyframes spin {
+  0% {
+	transform: rotate(0deg);
+	}
+  100% {
+	transform: rotate(360deg);
+	}
+  }
+
+// ==============================================
+// RESPONSIVE DESIGN
+// ==============================================
+
+@include respond-to("tablet") {
+  .loadingContainer {
+	max-width: 90%;
+	height:    $height-progress-container; }
+
+  .loadingSpinner {
+	width:  100px; // No direct variable, keeping specific for now or could add $size-loading-spinner-tablet
+	height: 100px; // No direct variable
+	}
+
+  .spinnerRing {
+	border-width: 6px; // No direct variable, could add $border-width-large: 6px;
+
+	&::before {
+	  width:  50px; // No direct variable
+	  height: 50px; // No direct variable
+	  }
+
+	&::after {
+	  font-size: $font-size-l;
+	  }
+	}
+  }
+
+@include respond-to("mobile") {
+  .errorBoundary {
+	min-height: 300px; // No direct variable
+	padding:    $spacing-xl $spacing-m;
+	}
+
+  .errorContainer {
+	padding: $spacing-l;
+	}
+
+  .errorIcon {
+	font-size: $font-size-5xl;
+	}
+
+  .errorTitle {
+	font-size: $font-size-xl;
+	}
+
+  .errorActions {
+	flex-direction: column;
+	gap:            $spacing-s;
+	}
+
+  .retryButton,
+  .reloadButton {
+	width: 100%;
+	}
+
+  .loadingContainer {
+	height: 300px; // No direct variable
+	margin: $spacing-l $spacing-m;
+	}
+
+  .loadingSpinner {
+	width:  80px; // No direct variable
+	height: 80px; // No direct variable
+	}
+
+  .spinnerRing {
+	border-width: $spacing-xxs;
+
+	&::before {
+	  width:  40px; // No direct variable, $height-min-button
+	  height: 40px; // No direct variable, $height-min-button
+	  }
+
+	&::after {
+	  font-size: $font-size-m;
+	  }
+	}
+  }
+
+@media (max-width: 480px) {
+  .loadingContainer {
+	height: 250px; // No direct variable
+	}
+
+  .loadingSpinner {
+	width:  60px; // No direct variable
+	height: 60px; // No direct variable
+	}
+
+  .spinnerRing {
+	&::before {
+	  width:  30px; // No direct variable
+	  height: 30px; // No direct variable
+	  }
+
+	&::after {
+	  font-size: $font-size-s;
+	  }
+	}
+  }

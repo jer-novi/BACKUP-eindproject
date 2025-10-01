@@ -1,0 +1,96 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as mixins;
+@use "@/styles/typography" as *;
+@use "sass:color";
+
+.formContainer {
+  width:         90%; // Responsive width
+  max-width:     450px; // Slightly increased max-width for better spacing
+  margin:        $spacing-l auto; // Centering and vertical margin
+  padding:       $spacing-l; // Uniform padding
+  border-radius: $border-radius-md;
+  background:    $card-background;
+  box-shadow:    $shadow-md;
+  }
+
+.form {
+  display:        flex;
+  flex-direction: column;
+  gap:            $spacing-l; // Increased gap for better separation of fields
+  }
+
+// Styles for FormField component structure
+.formGroup {
+  display:        flex;
+  flex-direction: column;
+  width:          100%; // Ensure form group takes full width
+  gap:            $spacing-xs; // Space between label and input
+  }
+
+.formLabel {
+  font-weight: $font-weight-semibold;
+  display:     block;
+  color:       $text-heading;
+  }
+
+.formLabelRequired::after { // Renamed for clarity
+  margin-left: 0.25em;
+  content:     "*";
+  color:       $feedback-error;
+  }
+
+.formInput {
+  @include mixins.input-base;
+  box-sizing: border-box; // Include padding and border in the element's total width and height
+  width:      100%; // Ensure input takes full width of its container
+  }
+
+.formInputInvalid {
+  border-color:     $feedback-error;
+  background-color: color.change($feedback-error, $alpha: 0.07);
+  }
+
+.formError {
+  font-size: $font-size-s; // Slightly larger for better readability
+  width:     100%; // Ensure error message takes full width
+  color:     $feedback-error;
+  }
+
+.formSuccess {
+  padding:       $spacing-m;
+  text-align:    center;
+  color:         $feedback-success;
+  border-radius: $border-radius-sm;
+  background:    color.change($feedback-success, $alpha: 0.08);
+  }
+
+.formInfo {
+  padding:       $spacing-m;
+  text-align:    center;
+  color:         $feedback-info;
+  border-radius: $border-radius-sm;
+  background:    color.change($feedback-info, $alpha: 0.08);
+  }
+
+.formHelp {
+  font-size:  $font-size-s; // Standardized font size
+  text-align: right; // Align help text like "Forgot password?" to the right
+  color:      $text-secondary;
+  }
+
+.formLink {
+  cursor:          pointer;
+  text-decoration: underline;
+  color:           $text-link;
+  }
+
+.redirectMessage {
+  font-size:  $font-size-xs;
+  margin-top: $spacing-xs;
+  color:      $text-secondary;
+  }
+
+.cancelButton {
+  @include mixins.button-base($button-secondary-background, $button-secondary-text);
+  margin-top: $spacing-xs;
+  }
